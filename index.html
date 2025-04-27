@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autism Prediction</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #2c3e50;
+      font-size: 2.5rem;
+      margin: 30px 0;
+      text-align: center;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    form {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      max-width: 600px;
+      width: 100%;
+      margin: 20px auto;
+      animation: slideUp 0.8s ease-out;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #34495e;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #dfe6e9;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #6c5ce7;
+      box-shadow: 0 0 8px rgba(108, 92, 231, 0.3);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    button {
+      background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    #randomizeButton {
+      background: linear-gradient(45deg, #e17055, #fdcb6e);
+    }
+
+    #resultDisplay {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 1.2rem;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .warning {
+      background: #ffe6e6;
+      color: #c0392b;
+      padding: 20px;
+      border: 2px solid #e74c3c;
+      border-radius: 10px;
+      animation: pop 0.5s ease forwards;
+      margin: 20px auto;
+      font-weight: 600;
+    }
+
+    .safe {
+      background: #e6f4ea;
+      color: #2ecc71;
+      padding: 20px;
+      border: 2px solid #27ae60;
+      border-radius: 10px;
+      animation: pop 0.5s ease forwards;
+      margin: 20px auto;
+      font-weight: 600;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+ On Wed, Apr 29, 2025, at 10:15 AM, User wrote:
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      form {
+        padding: 20px;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Autism Prediction Form</h1>
+
+  <form id="predictionForm">
+    <!-- Hidden inputs for A1_Score to A10_Score -->
+    <div id="scores" style="display: none;"></div>
+
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input type="number" id="age" name="age" required>
+    </div>
+
+    <div class="form-group">
+      <label for="gender">Gender (0 = Male, 1 = Female)</label>
+      <input type="number" id="gender" name="gender" min="0" max="1" required>
+    </div>
+
+    <div class="form-group">
+      <label for="ethnicity">Ethnicity (as encoded number)</label>
+      <input type="number" id="ethnicity" name="ethnicity" required>
+    </div>
+
+    <div class="form-group">
+      <label for="jaundice">Jaundice History (0 = No, 1 = Yes)</label>
+      <input type="number" id="jaundice" name="jaundice" min="0" max="1" required>
+    </div>
+
+    <div class="form-group">
+      <label for="austim">Family member with Autism (0 = No, 1 = Yes)</label>
+      <input type="number" id="austim" name="austim" min="0" max="1" required>
+    </div>
+
+    <div class="form-group">
+      <label for="contry_of_res">Country of Residence (as encoded number)</label>
+      <input type="number" id="contry_of_res" name="contry_of_res" required>
+    </div>
+
+    <div class="form-group">
+      <label for="used_app_before">Used App Before (0 = No, 1 = Yes)</label>
+      <input type="number" id="used_app_before" name="used_app_before" min="0" max="1" required>
+    </div>
+
+    <div class="form-group">
+      <label for="result">Result Score</label>
+      <input type="number" id="result" name="result" step="any" required>
+    </div>
+
+    <div class="form-group">
+      <label for="relation">Relation (as encoded number)</label>
+      <input type="number" id="relation" name="relation" required>
+    </div>
+
+    <div class="button-group">
+      <button type="submit">Predict</button>
+      <button type="button" id="randomizeButton">Randomize Values</button>
+    </div>
+  </form>
+
+  <div id="resultDisplay"></div>
+
+  <script>
+    // Default values
+    const defaultValues = [
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // A1_Score to A10_Score
+      7.0,                          // age
+      1,                            // gender
+      9,                            // ethnicity
+      0,                            // jaundice
+      1,                            // austim
+      52,                           // contry_of_res
+      0,                            // used_app_before
+      14.851484,                    // result
+      1                             // relation
+    ];
+
+    // Add hidden A1 to A10 inputs
+    const scoresDiv = document.getElementById('scores');
+    for (let i = 1; i <= 10; i++) {
+      scoresDiv.innerHTML += `
+        <input type="hidden" id="A${i}_Score" name="A${i}_Score" value="${defaultValues[i-1]}">
+      `;
+    }
+
+    // Pre-fill visible inputs
+    window.onload = function() {
+      document.getElementById('age').value = defaultValues[10];
+      document.getElementById('gender').value = defaultValues[11];
+      document.getElementById('ethnicity').value = defaultValues[12];
+      document.getElementById('jaundice').value = defaultValues[13];
+      document.getElementById('austim').value = defaultValues[14];
+      document.getElementById('contry_of_res').value = defaultValues[15];
+      document.getElementById('used_app_before').value = defaultValues[16];
+      document.getElementById('result').value = defaultValues[17];
+      document.getElementById('relation').value = defaultValues[18];
+    };
+
+    // Randomize function
+    function randomizeValues() {
+      for (let i = 1; i <= 10; i++) {
+        document.getElementById(`A${i}_Score`).value = Math.floor(Math.random() * 2);
+      }
+      document.getElementById('age').value = Math.floor(Math.random() * (60 - 2 + 1)) + 2;
+      document.getElementById('gender').value = Math.floor(Math.random() * 2);
+      document.getElementById('ethnicity').value = Math.floor(Math.random() * 10);
+      document.getElementById('jaundice').value = Math.floor(Math.random() * 2);
+      document.getElementById('austim').value = Math.floor(Math.random() * 2);
+      document.getElementById('contry_of_res').value = Math.floor(Math.random() * 10);
+      document.getElementById('used_app_before').value = Math.floor(Math.random() * 2);
+      document.getElementById('result').value = (Math.random() * 20).toFixed(2);
+      document.getElementById('relation').value = Math.floor(Math.random() * 10);
+    }
+
+    document.getElementById('randomizeButton').addEventListener('click', randomizeValues);
+
+    // Form submission
+    document.getElementById('predictionForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const formData = {};
+      for (let i = 1; i <= 10; i++) {
+        formData[`A${i}_Score`] = parseInt(document.getElementById(`A${i}_Score`).value);
+      }
+      formData.age = parseFloat(document.getElementById('age').value);
+      formData.gender = parseInt(document.getElementById('gender').value);
+      formData.ethnicity = parseInt(document.getElementById('ethnicity').value);
+      formData.jaundice = parseInt(document.getElementById('jaundice').value);
+      formData.austim = parseInt(document.getElementById('austim').value);
+      formData.contry_of_res = parseInt(document.getElementById('contry_of_res').value);
+      formData.used_app_before = parseInt(document.getElementById('used_app_before').value);
+      formData.result = parseFloat(document.getElementById('result').value);
+      formData.relation = parseInt(document.getElementById('relation').value);
+
+      try {
+        const response = await fetch('http://localhost:5000/predict', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const result = await response.json();
+
+        const resultDisplay = document.getElementById('resultDisplay');
+        resultDisplay.innerHTML = ''; // Clear previous result
+
+        if (result.prediction) {
+          if (result.prediction === 'Autism Detected') {
+            resultDisplay.innerHTML = `<div class="warning">⚠️ Autism Detected. Please consult a specialist.</div>`;
+          } else {
+            resultDisplay.innerHTML = `<div class="safe">✅ No Autism Detected. Stay healthy!</div>`;
+          }
+        } else if (result.error) {
+          resultDisplay.innerHTML = `<div class="warning">Error: ${result.error}</div>`;
+        }
+      } catch (error) {
+        document.getElementById('resultDisplay').innerHTML = `<div class="warning">Fetch Error: ${error}</div>`;
+      }
+    });
+  </script>
+</body>
+</html>
